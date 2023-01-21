@@ -11,7 +11,7 @@ public class ZapUtil {
 
     private static final String zapAddress = "127.0.0.1";
     private static final int zapPort = 8080;
-    private static final String apiKey = Enter_API_KEY from ZAP; //Please add your own api key from ZAP
+    private static final String apiKey = System.getProperty("APIKEY");
 
 
     static {
@@ -37,18 +37,20 @@ public class ZapUtil {
 
     public static void generateZapReport(String site_to_test) {
         String title = "Demo Title";
-        String template = "traditional-html";
-        String theme = null;
-        String description = "Demo description";
-        String contexts = null;
         String sites = site_to_test;
-        String sections = null;
+        String description = "Demo description";
+
+        String template = "traditional-html-plus";
+        String sections = "chart|alertcount|instancecount|statistics|alertdetails";
+        String theme = "dark";
+
+        String includedrisks = "Medium|High";
         String includedconfidences = null;
-        String includedrisks = null;
-        String reportfilename = "Demofilename";
-        String reportfilenamepattern = null;
-        String reportdir = System.getProperty("user.dir");
-        String display = null;
+        String reportfilename = null;
+        String reportfilenamepattern = "{{yyyy-MM-dd}}-ZAP-Report-[[site]]";
+        String reportdir = System.getProperty("user.dir")+"//reports";
+        String display = "true";
+        String contexts = null;
 
         try {
             clientApi.reports.generate(title, template, theme, description, contexts, sites, sections,
