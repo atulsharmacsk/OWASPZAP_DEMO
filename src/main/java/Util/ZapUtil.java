@@ -41,16 +41,16 @@ public class ZapUtil {
         String description = "Demo description";
 
         String template = "traditional-html-plus";
-        String sections = "chart|alertcount|instancecount|statistics|alertdetails";
+        String sections = "chart|alertcount|passingrules|instancecount|statistics|alertdetails";
         String theme = "dark";
 
-        String includedrisks = "Medium|High";
+        String includedrisks = "High|Medium|Low";
         String includedconfidences = null;
         String reportfilename = null;
         String reportfilenamepattern = "{{yyyy-MM-dd}}-ZAP-Report-[[site]]";
         String reportdir = System.getProperty("user.dir")+"//reports";
         String display = "true";
-        String contexts = null;
+        String contexts = "Atul";
 
         try {
             clientApi.reports.generate(title, template, theme, description, contexts, sites, sections,
