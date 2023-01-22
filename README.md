@@ -1,4 +1,5 @@
-===================================================================-Demo part 1------------------------------------------------------------------------------
+--------------------------------------Demo part 1---------------------------------------------------
+
 # OWASPZAP_DEMO
 OWASP ZAP automation using java, selenium, zapClient, TestNG and Maven
 
@@ -79,7 +80,8 @@ Glimpse of upcoming topics that we will cover through automation-
 - Using Restassured as another approach for interacting with zapClient api.
 		
 
---------------------------------------------------------------------Demo part 2-------------------------------------------------------------------------------
+
+--------------------------------------Demo part 2---------------------------------------------------
 Agenda-
 - Enabling test case execution from maven/cmd line and passing api key as a parameter
 - Exploring various reporting attributes from genrateReport method of zapUtil. (https://www.zaproxy.org/docs/desktop/addons/report-generation/api/)
