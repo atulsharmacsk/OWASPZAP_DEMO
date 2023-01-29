@@ -6,6 +6,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.zaproxy.clientapi.core.ClientApiException;
 
 import java.lang.reflect.Method;
 
@@ -14,8 +15,8 @@ import static Util.ZapUtil.*;
 public class ZapTest {
 
     WebDriver driver;
-    //private final String urlToTest="http://127.0.0.1:8080";
-    private final String urlToTest="https://ginandjuice.shop/";
+    private final String urlToTest="http://127.0.0.1:8080";
+    //private final String urlToTest="https://ginandjuice.shop/";
 
     @BeforeMethod
     public void setUp(){
@@ -27,10 +28,16 @@ public class ZapTest {
         driver=new ChromeDriver(chromeOptions);
     }
 
+//    @Test
+//    public void testPassiveScan(){
+//        driver.get(urlToTest);
+//        waitTillPassiveScanCompleted();
+//    }
+
     @Test
-    public void testPassiveScan(){
-        driver.get(urlToTest);
-        waitTillPassiveScanCompleted();
+    public void testActiveScan() throws ClientApiException {
+        addURLToScanTree(urlToTest);
+        performActiveScan(urlToTest);
     }
 
     @AfterMethod
