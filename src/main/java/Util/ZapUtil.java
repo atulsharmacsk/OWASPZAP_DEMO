@@ -3,6 +3,9 @@ package Util;
 import org.openqa.selenium.Proxy;
 import org.zaproxy.clientapi.core.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class ZapUtil {
 
     private static ClientApi clientApi;
@@ -34,6 +37,47 @@ public class ZapUtil {
         }
     }
 
+    public static void addURLToScanTree(String site_to_test) throws ClientApiException {
+        clientApi.core.accessUrl(site_to_test, "false");
+        if(getUrlsFromScanTree().contains(site_to_test))
+            System.out.println(site_to_test+ " has been added to scan tree");
+        else
+            throw new RuntimeException(site_to_test +" not added to scan tree, active scan will not be possible");
+    }
+
+    public static List<String> getUrlsFromScanTree() throws ClientApiException {
+        apiResponse=clientApi.core.urls();
+        List<ApiResponse> responses=((ApiResponseList)apiResponse).getItems();
+        return responses.stream().map(r->((ApiResponseElement)r).getValue()).collect(Collectors.toList());
+    }
+
+    public static void performActiveScan(String site_to_test) throws ClientApiException {
+        String url = site_to_test;
+        String recurse = null;
+        String inscopeonly = null;
+        String scanpolicyname = null;
+        String method = null;
+        String postdata = null;
+        Integer contextId= null;
+        apiResponse = clientApi.ascan.scan(url, recurse, inscopeonly, scanpolicyname, method, postdata, contextId);
+        String scanId = ((ApiResponseElement) apiResponse).getValue();
+
+        waitTillActiveScanIsCompleted(scanId);
+    }
+
+    private static void waitTillActiveScanIsCompleted(String scanId) throws ClientApiException {
+        apiResponse=clientApi.ascan.status(scanId);
+        String status=((ApiResponseElement)apiResponse).getValue();
+
+        while (!status.equals("100")){
+            apiResponse=clientApi.ascan.status(scanId);
+            status=((ApiResponseElement)apiResponse).getValue();
+            System.out.println("Active scan is in progress");
+        }
+
+        System.out.println("Active scan has completed");
+    }
+
 
     public static void generateZapReport(String site_to_test) {
         String title = "Demo Title";
@@ -50,7 +94,7 @@ public class ZapUtil {
         String reportfilenamepattern = "{{yyyy-MM-dd}}-ZAP-Report-[[site]]";
         String reportdir = System.getProperty("user.dir")+"//reports";
         String display = "true";
-        String contexts = "Atul";
+        String contexts = null;
 
         try {
             clientApi.reports.generate(title, template, theme, description, contexts, sites, sections,

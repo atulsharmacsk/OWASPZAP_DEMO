@@ -1,0 +1,199 @@
+{
+	"info": {
+		"_postman_id": "26f7c183-0eb9-4576-9873-b409eb127980",
+		"name": "Zap End Points",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6617455"
+	},
+	"item": [
+		{
+			"name": "WaitForPassiveScan",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE}}/pscan/view/recordsToScan/?apikey={{apiKey}}",
+					"host": [
+						"{{BASE}}"
+					],
+					"path": [
+						"pscan",
+						"view",
+						"recordsToScan",
+						""
+					],
+					"query": [
+						{
+							"key": "apikey",
+							"value": "{{apiKey}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "StartActiveScan",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"pm.collectionVariables.set(\"scanId\",jsonData.scan );"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE}}/ascan/action/scan/?apikey={{apiKey}}&url=http://127.0.0.1:8080",
+					"host": [
+						"{{BASE}}"
+					],
+					"path": [
+						"ascan",
+						"action",
+						"scan",
+						""
+					],
+					"query": [
+						{
+							"key": "apikey",
+							"value": "{{apiKey}}"
+						},
+						{
+							"key": "url",
+							"value": "http://127.0.0.1:8080"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "WaitForActiveScan",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE}}/ascan/view/status/?apikey={{apiKey}}&scanid={{scanId}}",
+					"host": [
+						"{{BASE}}"
+					],
+					"path": [
+						"ascan",
+						"view",
+						"status",
+						""
+					],
+					"query": [
+						{
+							"key": "apikey",
+							"value": "{{apiKey}}"
+						},
+						{
+							"key": "scanid",
+							"value": "{{scanId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddAccessURLToScanTree",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE}}/core/action/accessUrl/?apikey={{apiKey}}&url=http://127.0.0.1:8080",
+					"host": [
+						"{{BASE}}"
+					],
+					"path": [
+						"core",
+						"action",
+						"accessUrl",
+						""
+					],
+					"query": [
+						{
+							"key": "apikey",
+							"value": "{{apiKey}}"
+						},
+						{
+							"key": "url",
+							"value": "http://127.0.0.1:8080"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetScanTreeURLs",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE}}/core/view/urls?apikey={{apiKey}}",
+					"host": [
+						"{{BASE}}"
+					],
+					"path": [
+						"core",
+						"view",
+						"urls"
+					],
+					"query": [
+						{
+							"key": "apikey",
+							"value": "{{apiKey}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteScanTreeURLs",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE}}/core/action/deleteSiteNode/?apikey={{apiKey}}&url=\"http://127.0.0.1:8080\"",
+					"host": [
+						"{{BASE}}"
+					],
+					"path": [
+						"core",
+						"action",
+						"deleteSiteNode",
+						""
+					],
+					"query": [
+						{
+							"key": "apikey",
+							"value": "{{apiKey}}"
+						},
+						{
+							"key": "url",
+							"value": "\"http://127.0.0.1:8080\""
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "scanId",
+			"value": ""
+		}
+	]
+}
