@@ -44,4 +44,3 @@ Things to come-
     - generation separate reports
     - clean scan tree after each run.
 - Replacing zapclientapi with restassured.
--
