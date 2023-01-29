@@ -1,70 +1,47 @@
 Agenda-
-- Enabling test case execution from maven/cmd line and passing api key as a parameter
-- Exploring various reporting attributes from genrateReport method of zapUtil. (https://www.zaproxy.org/docs/desktop/addons/report-generation/api/)
-- Some basic terminologies like Strength, Threshold, Passive scan rule, Policies, Confidence
+1. Setting up Postman with the zap end points.
+2. Executing Active Scan using zapClientAPI.
 
 
 Steps:-
-1. Create testng.xml and include sureflre plugin in pom.xml. provide testng.xml location to surefire plugin.
-   Surefire with testng-https://maven.apache.org/surefire/maven-surefire-plugin/examples/testng.html
-
-testng.xml->
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Practice Suite">
-    <test name="Test Basics 1">
-        <classes>
-            <class name="ZapTest"/>
-        </classes>
-    </test> <!-- Test -->
-</suite> <!-- Suite -->
+1. Created postman collection for the end points from https://www.zaproxy.org/docs/api/.
+2. Try to check active scan from postman and understand the prerequisite for the same.
+3. Adding url to Site tree using zapClientAPI.
+4. Verifying the url got added to scan tree.
+4. How to Run Active Scan using zapClientAPI.
+5. Waiting dynamically for active scan to get completed.
+6. Excluding certian urls from getting into scan tree.
 
 
-Addition to pom.xml,  after closure of dependenices tag
-<build>
-<pluginManagement>
-<plugins>
-<plugin>
-<groupId>org.apache.maven.plugins</groupId>
-<artifactId>maven-surefire-plugin</artifactId>
-<version>3.0.0-M8</version>
-<configuration>
-<suiteXmlFiles>
-<suiteXmlFile>./src/test/testng.xml</suiteXmlFile>
-</suiteXmlFiles>
-</configuration>
-</plugin>
-</plugins>
-</pluginManagement>
-</build>
+Adding url to site trr-
+clientApi.core.accessUrl(site_to_test, "false");
 
-2.	To run the test cases use command->
-      mvn -DAPIKEY=api_key_value -DforkCount=0 test
-      where
-      -DAPIKEY is to pass apikey in form of parameter.
-      -DforkCount to debug your code.
+Verifying the urls added-
+apiResponse = clientApi.core.urls();
+System.out.println("test");
+List<ApiResponse> list = ((ApiResponseList) apiResponse).getItems();
 
-3. Understand parameters of report method:-
-   https://www.zaproxy.org/docs/desktop/addons/report-generation/api/
-   https://www.zaproxy.org/docs/desktop/addons/report-generation/templates/
+Active scan parameters-
+String url = site_to_test;
+String recurse = null;
+String inscopeonly = null;
+String scanpolicyname = null;
+String method = null;
+String postdata = null;
+Integer contextId=0;
+apiResponse = clientApi.ascan.scan(url, recurse, inscopeonly, scanpolicyname, method, postdata, contextId);
+String scanId = ((ApiResponseElement) apiResponse).getValue();
 
-Basic Terms:-
-strength & threshold;-
-Strength. (Intensity of attack, only for active scan)
-This controls the number of attacks that ZAP will perform.
-If you select Low then fewer attacks will be used which will be quicker but may miss some issues.
-If you select High then more attacks will be used which may find more issues but will take longer.
+WaitillActiveScan-
+apiResponse = clientApi.ascan.status(scanId);
+String scanProgress = ((ApiResponseElement) apiResponse).getValue();
 
-threshold. (Once a Threshould is crossed only then alert are raised)
-This controls how likely ZAP is to report potential threat.
-If you select Off then the scan rule won’t run.
-If you select Low then more potential issues will be raised which mean there can be lot unsignificant threats reported.
-If you select High then fewer potential issues will be raised which may mean that some real issues are missed.
 
-Policy - A way to provide different strengthe and threshold levels to various type of threat.
-Can be found in Policy Manager.
-
-Passive Scan- Passive Scan rules
-Active Scan- we use policies.
-
-Confidence:-"confidence" of or in the finding. In other word how sure ZAP is in the finding/alert.
+Things to come-
+- Creating contexts.
+- Active scan parameters.
+- Running both active/passive scan together.
+    - generation separate reports
+    - clean scan tree after each run.
+- Replacing zapclientapi with restassured.
+-
