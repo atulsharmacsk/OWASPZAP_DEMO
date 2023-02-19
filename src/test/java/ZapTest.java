@@ -16,6 +16,7 @@ public class ZapTest {
 
     WebDriver driver;
     private final String urlToTest="http://127.0.0.1:8080";
+    private final String contextName="Demo_Context";
     //private final String urlToTest="https://ginandjuice.shop/";
 
     @BeforeMethod
@@ -28,21 +29,22 @@ public class ZapTest {
         driver=new ChromeDriver(chromeOptions);
     }
 
-//    @Test
-//    public void testPassiveScan(){
-//        driver.get(urlToTest);
-//        waitTillPassiveScanCompleted();
-//    }
+    @Test
+    public void testPassiveScan(){
+        driver.get(urlToTest);
+        waitTillPassiveScanCompleted();
+    }
 
     @Test
     public void testActiveScan() throws ClientApiException {
         addURLToScanTree(urlToTest);
-        performActiveScan(urlToTest);
+        performActiveScan(urlToTest, contextName);
     }
 
     @AfterMethod
-    public void tearDown(Method method){
-        generateZapReport(urlToTest);
+    public void tearDown(Method method) throws ClientApiException {
+        generateZapReport(urlToTest,method.getName().replace("test",""));
+        cleanTheScanTree();
         driver.quit();
     }
 

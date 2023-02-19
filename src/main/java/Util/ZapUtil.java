@@ -51,18 +51,32 @@ public class ZapUtil {
         return responses.stream().map(r->((ApiResponseElement)r).getValue()).collect(Collectors.toList());
     }
 
-    public static void performActiveScan(String site_to_test) throws ClientApiException {
+    public static void performActiveScan(String site_to_test, String contextName) throws ClientApiException {
         String url = site_to_test;
         String recurse = null;
         String inscopeonly = null;
         String scanpolicyname = null;
         String method = null;
         String postdata = null;
-        Integer contextId= null;
+        Integer contextId= getContextAfterImporting(contextName);
+        System.out.println("context id imported "+ contextId);
         apiResponse = clientApi.ascan.scan(url, recurse, inscopeonly, scanpolicyname, method, postdata, contextId);
         String scanId = ((ApiResponseElement) apiResponse).getValue();
 
         waitTillActiveScanIsCompleted(scanId);
+
+        apiResponse=clientApi.context.removeContext(contextName);
+        if(((ApiResponseElement)apiResponse).getValue().equals("OK"))
+            System.out.println("context has been removed");
+        else
+            throw new RuntimeException("context was not removed after active scan");
+
+
+    }
+
+    private static Integer getContextAfterImporting(String contextName) throws ClientApiException {
+        apiResponse=clientApi.context.importContext(contextName);
+        return Integer.parseInt(((ApiResponseElement)apiResponse).getValue());
     }
 
     private static void waitTillActiveScanIsCompleted(String scanId) throws ClientApiException {
@@ -79,9 +93,9 @@ public class ZapUtil {
     }
 
 
-    public static void generateZapReport(String site_to_test) {
+    public static void generateZapReport(String urlToTest, String reportName) {
         String title = "Demo Title";
-        String sites = site_to_test;
+        String sites = urlToTest;
         String description = "Demo description";
 
         String template = "traditional-html-plus";
@@ -90,17 +104,31 @@ public class ZapUtil {
 
         String includedrisks = "High|Medium|Low";
         String includedconfidences = null;
-        String reportfilename = null;
-        String reportfilenamepattern = "{{yyyy-MM-dd}}-ZAP-Report-[[site]]";
+        String reportfilename = reportName;
+        //String reportfilenamepattern = "{{yyyy-MM-dd}}-ZAP-Report-[[site]]";
         String reportdir = System.getProperty("user.dir")+"//reports";
         String display = "true";
         String contexts = null;
 
         try {
             clientApi.reports.generate(title, template, theme, description, contexts, sites, sections,
-                    includedconfidences, includedrisks, reportfilename, reportfilenamepattern, reportdir, display);
+                    includedconfidences, includedrisks, reportfilename, "", reportdir, display);
         } catch (ClientApiException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void cleanTheScanTree() throws ClientApiException {
+        List<String> urls=getUrlsFromScanTree();
+        for (String url:urls){
+            if(getUrlsFromScanTree().stream().anyMatch(s->s.contains(url))){
+                clientApi.core.deleteSiteNode(url,"","");
+            }
+        }
+        if(getUrlsFromScanTree().size()==0)
+            System.out.println("scan tree has been cleared successfully");
+        else
+            throw new RuntimeException("scan tree was not cleared");
+
     }
 }
