@@ -199,8 +199,8 @@ Confidence:-"confidence" of or in the finding. In other word how sure ZAP is in 
 --------------------------------------Demo part 3---------------------------------------------------
 
 Agenda-
-Setting up Postman with the zap end points.
-Executing Active Scan using zapClientAPI.
+ - Setting up Postman with the zap end points.
+ = Executing Active Scan using zapClientAPI.
 Steps:-
 
 Created postman collection for the end points from https://www.zaproxy.org/docs/api/.
