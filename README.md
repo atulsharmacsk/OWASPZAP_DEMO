@@ -82,6 +82,7 @@ Glimpse of upcoming topics that we will cover through automation-
 
 
 --------------------------------------Demo part 2---------------------------------------------------
+
 Agenda-
 1. Setting up Postman with the zap end points.
 2. Executing Active Scan using zapClientAPI.
@@ -196,8 +197,8 @@ Confidence:-"confidence" of or in the finding. In other word how sure ZAP is in 
 
 
 --------------------------------------Demo part 3---------------------------------------------------
-Agenda-
 
+Agenda-
 Setting up Postman with the zap end points.
 Executing Active Scan using zapClientAPI.
 Steps:-
@@ -227,6 +228,7 @@ clean scan tree after each run.
 Replacing zapclientapi with restassured.
 
 --------------------------------------Demo part 4---------------------------------------------------
+
 Agenda-
 - Creating contexts, importing contexts, removing contexts.
 - Few of the mostly used Active scan parameters.
