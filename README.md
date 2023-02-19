@@ -129,7 +129,7 @@ Things to come-
     - generation separate reports
     - clean scan tree after each run.
 - Replacing zapclientapi with restassured.
--
+
 =======
 1. Create testng.xml and include sureflre plugin in pom.xml. provide testng.xml location to surefire plugin.
    Surefire with testng-https://maven.apache.org/surefire/maven-surefire-plugin/examples/testng.html
@@ -200,7 +200,7 @@ Confidence:-"confidence" of or in the finding. In other word how sure ZAP is in 
 
 Agenda-
  - Setting up Postman with the zap end points.
- = Executing Active Scan using zapClientAPI.
+ - Executing Active Scan using zapClientAPI.
 Steps:-
 
 Created postman collection for the end points from https://www.zaproxy.org/docs/api/.
