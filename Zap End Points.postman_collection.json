@@ -7,6 +7,167 @@
 	},
 	"item": [
 		{
+			"name": "Demo5",
+			"item": [
+				{
+					"name": "StartSpiderScan",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"pm.collectionVariables.set(\"scanId\",jsonData.scan );"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE}}/spider/action/scan/?apikey={{apiKey}}&url=http://127.0.0.1:8080",
+							"host": [
+								"{{BASE}}"
+							],
+							"path": [
+								"spider",
+								"action",
+								"scan",
+								""
+							],
+							"query": [
+								{
+									"key": "apikey",
+									"value": "{{apiKey}}"
+								},
+								{
+									"key": "url",
+									"value": "http://127.0.0.1:8080"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetSpiderStatus",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"pm.collectionVariables.set(\"scanId\",jsonData.scan );"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE}}/spider/view/status/?apikey={{apiKey}}&scanId=0",
+							"host": [
+								"{{BASE}}"
+							],
+							"path": [
+								"spider",
+								"view",
+								"status",
+								""
+							],
+							"query": [
+								{
+									"key": "apikey",
+									"value": "{{apiKey}}"
+								},
+								{
+									"key": "scanId",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "WaitForPassiveScan",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE}}/pscan/view/recordsToScan/?apikey={{apiKey}}",
+							"host": [
+								"{{BASE}}"
+							],
+							"path": [
+								"pscan",
+								"view",
+								"recordsToScan",
+								""
+							],
+							"query": [
+								{
+									"key": "apikey",
+									"value": "{{apiKey}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "StartActiveScan",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"pm.collectionVariables.set(\"scanId\",jsonData.scan );"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE}}/ascan/action/scan/?apikey={{apiKey}}&url=http://127.0.0.1:8080&contextId=8",
+							"host": [
+								"{{BASE}}"
+							],
+							"path": [
+								"ascan",
+								"action",
+								"scan",
+								""
+							],
+							"query": [
+								{
+									"key": "apikey",
+									"value": "{{apiKey}}"
+								},
+								{
+									"key": "url",
+									"value": "http://127.0.0.1:8080"
+								},
+								{
+									"key": "contextId",
+									"value": "8"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "WaitForPassiveScan",
 			"request": {
 				"method": "GET",
@@ -105,12 +266,85 @@
 			"response": []
 		},
 		{
+			"name": "ImportContext",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"pm.collectionVariables.set(\"scanId\",jsonData.scan );"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE}}/context/action/importContext//?apikey={{apiKey}}&contextFile=Demo_Context",
+					"host": [
+						"{{BASE}}"
+					],
+					"path": [
+						"context",
+						"action",
+						"importContext",
+						"",
+						""
+					],
+					"query": [
+						{
+							"key": "apikey",
+							"value": "{{apiKey}}"
+						},
+						{
+							"key": "contextFile",
+							"value": "Demo_Context"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RemoveContext",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE}}/context/action/removeContext/?apikey={{apiKey}}&contextName=Demo_Context",
+					"host": [
+						"{{BASE}}"
+					],
+					"path": [
+						"context",
+						"action",
+						"removeContext",
+						""
+					],
+					"query": [
+						{
+							"key": "apikey",
+							"value": "{{apiKey}}"
+						},
+						{
+							"key": "contextName",
+							"value": "Demo_Context"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "AddAccessURLToScanTree",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{BASE}}/core/action/accessUrl/?apikey={{apiKey}}&url=http://127.0.0.1:8080",
+					"raw": "{{BASE}}/core/action/accessUrl/?apikey={{apiKey}}&url=http://127.0.0.1:8080/",
 					"host": [
 						"{{BASE}}"
 					],
@@ -127,7 +361,7 @@
 						},
 						{
 							"key": "url",
-							"value": "http://127.0.0.1:8080"
+							"value": "http://127.0.0.1:8080/"
 						}
 					]
 				}
@@ -165,7 +399,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{BASE}}/core/action/deleteSiteNode/?apikey={{apiKey}}&url=\"http://127.0.0.1:8080\"",
+					"raw": "{{BASE}}/core/action/deleteSiteNode/?apikey={{apiKey}}&url=http://127.0.0.1:8080",
 					"host": [
 						"{{BASE}}"
 					],
@@ -182,7 +416,53 @@
 						},
 						{
 							"key": "url",
-							"value": "\"http://127.0.0.1:8080\""
+							"value": "http://127.0.0.1:8080"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "StartActiveScanDetailed",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"pm.collectionVariables.set(\"scanId\",jsonData.scan );"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE}}/ascan/action/scan/?apikey={{apiKey}}&url=http://127.0.0.1:8080&method=POST",
+					"host": [
+						"{{BASE}}"
+					],
+					"path": [
+						"ascan",
+						"action",
+						"scan",
+						""
+					],
+					"query": [
+						{
+							"key": "apikey",
+							"value": "{{apiKey}}"
+						},
+						{
+							"key": "url",
+							"value": "http://127.0.0.1:8080"
+						},
+						{
+							"key": "method",
+							"value": "POST"
 						}
 					]
 				}

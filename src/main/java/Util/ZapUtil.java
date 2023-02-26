@@ -51,6 +51,25 @@ public class ZapUtil {
         return responses.stream().map(r->((ApiResponseElement)r).getValue()).collect(Collectors.toList());
     }
 
+    public static void performSpidering(String site_to_test, String contextName) throws ClientApiException {
+        apiResponse=clientApi.spider.scan(site_to_test,null,null,null,null);
+        String spiderScanId=((ApiResponseElement)apiResponse).getValue();
+
+        apiResponse=clientApi.spider.status(spiderScanId);
+        String spiderScanStatus=((ApiResponseElement)apiResponse).getValue();
+
+        while (!spiderScanStatus.equals("100")){
+            apiResponse=clientApi.spider.status(spiderScanId);
+            spiderScanStatus=((ApiResponseElement)apiResponse).getValue();
+            System.out.println("Spidering is in progress, current status="+spiderScanStatus);
+        }
+
+        waitTillPassiveScanCompleted();
+
+        System.out.println("starting active scan--");
+        performActiveScan(site_to_test, contextName);
+    }
+
     public static void performActiveScan(String site_to_test, String contextName) throws ClientApiException {
         String url = site_to_test;
         String recurse = null;
