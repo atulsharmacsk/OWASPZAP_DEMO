@@ -29,16 +29,21 @@ public class ZapTest {
         driver=new ChromeDriver(chromeOptions);
     }
 
-    @Test
-    public void testPassiveScan(){
-        driver.get(urlToTest);
-        waitTillPassiveScanCompleted();
-    }
+//    @Test
+//    public void testPassiveScan(){
+//        driver.get(urlToTest);
+//        waitTillPassiveScanCompleted();
+//    }
+//
+//    @Test
+//    public void testActiveScan() throws ClientApiException {
+//        addURLToScanTree(urlToTest);
+//        performActiveScan(urlToTest, contextName);
+//    }
 
     @Test
-    public void testActiveScan() throws ClientApiException {
-        addURLToScanTree(urlToTest);
-        performActiveScan(urlToTest, contextName);
+    public void testSpider() throws ClientApiException {
+        performSpidering(urlToTest,contextName);
     }
 
     @AfterMethod
