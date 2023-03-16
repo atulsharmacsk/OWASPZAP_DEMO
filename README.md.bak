@@ -1,5 +1,5 @@
 
--------------------------------DEMO 1-------------------------------------
+-------------------------------------------------------------------------DEMO 1----------------------------------------------------
 
 The OWASP Zed Attack Proxy is a free security tool 
 which acts as a proxy between browser and network, find security issues in web applications 
@@ -79,7 +79,7 @@ Glimpse of upcoming topics that we will cover through automation-
 
 
 
--------------------------------DEMO 2-------------------------------------
+-------------------------------------------------------------------------DEMO 2----------------------------------------------------
 
 Agenda- 
 - Enabling test case execution from maven/cmd line and passing api key as a parameter
@@ -154,7 +154,7 @@ Confidence:-"confidence" of or in the finding. In other word how sure ZAP is in 
 
 
 
--------------------------------DEMO 3-------------------------------------
+-------------------------------------------------------------------------DEMO 3----------------------------------------------------
 
 Agenda-
 1. Setting up Postman with the zap end points. 
@@ -205,7 +205,7 @@ Things to come-
 
 
 
--------------------------------DEMO 4-------------------------------------
+-------------------------------------------------------------------------DEMO 4----------------------------------------------------
 
 Agenda-
 - Creating contexts, importing contexts, removing contexts.
@@ -230,8 +230,7 @@ Things yet to cover
 - Replacing zapclientapi with restassured.	
 
 
--------------------------------DEMO 5-------------------------------------
-
+-------------------------------------------------------------------------DEMO 5----------------------------------------------------
 Agenda-
  -- Executing the Spider
  -- Waiting till Spider runs completely 
@@ -242,43 +241,3 @@ Agenda-
  
  -- Traditional Spider (Crawler): Use this approach to crawl the HTML resources (hyperlinks etc) in the web application.
  -- Ajax Spider: Use this feature if the application heavily relies with Ajax calls.  
-
-
--------------------------------DEMO 6-------------------------------------
-
-Agenda-
-1. Understanding the authentication concept in zap
-2. Performing a form based authentication and doing an authenticated scan
-3. Understanding how to extract any response value from complex apiresponse of zapClient
-
-
-
-Target application might have some sections of application which is only available for logged in users, therefore it is very important to know how to perform authenticated scans in zap.
-
-Types of authentications:-
- > Form-based authentication
- > Script-based authentication
- > JSON-based authentication
-
-
-general steps when configuring the application authentication with ZAP.
-Define a context which
-> include the target application inside the context. 
-> exclude logout page, password change functionality etc.
-> Set the authentication mechanism
-> Define auth parameters
-> Set up login/logout indicators
-> Add valid user and passowrd for login
-> Make sure that session management is set as "Cookie based session management"
-
-
-
-Running a spider using above context, user, site
-
-
-
-Install- docker-https://docs.docker.com/desktop/install/windows-install/
-
-
-Application for form based login- 
-docker run --rm -p 8090:8080 -i -t psiinon/bodgeit

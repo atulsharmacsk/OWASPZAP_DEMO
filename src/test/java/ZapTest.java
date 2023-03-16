@@ -15,18 +15,19 @@ import static Util.ZapUtil.*;
 public class ZapTest {
 
     WebDriver driver;
-    private final String urlToTest="http://127.0.0.1:8080";
-    private final String contextName="Demo_Context";
+    private final String urlToTest="http://localhost:8090/bodgeit/";
+    private final String contextName="Form_Based_Auth";
+    private final String user="Test1";
     //private final String urlToTest="https://ginandjuice.shop/";
 
     @BeforeMethod
     public void setUp(){
-        ChromeOptions chromeOptions=new ChromeOptions();
-        chromeOptions.setProxy(proxy);
-        chromeOptions.setAcceptInsecureCerts(true);
-
-        WebDriverManager.chromedriver().setup();
-        driver=new ChromeDriver(chromeOptions);
+//        ChromeOptions chromeOptions=new ChromeOptions();
+//        chromeOptions.setProxy(proxy);
+//        chromeOptions.setAcceptInsecureCerts(true);
+//
+//        WebDriverManager.chromedriver().setup();
+//        driver=new ChromeDriver(chromeOptions);
     }
 
 //    @Test
@@ -41,9 +42,14 @@ public class ZapTest {
 //        performActiveScan(urlToTest, contextName);
 //    }
 
+//    @Test
+//    public void testSpider() throws ClientApiException {
+//        performSpidering(urlToTest,contextName);
+//    }
+
     @Test
-    public void testSpider() throws ClientApiException {
-        performSpidering(urlToTest,contextName);
+    public void testSpiderAsFormBasedUser() throws ClientApiException {
+        performSpideringAsUser(urlToTest,contextName,user);
     }
 
     @AfterMethod

@@ -4,6 +4,7 @@ import org.openqa.selenium.Proxy;
 import org.zaproxy.clientapi.core.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ZapUtil {
@@ -63,11 +64,43 @@ public class ZapUtil {
             spiderScanStatus=((ApiResponseElement)apiResponse).getValue();
             System.out.println("Spidering is in progress, current status="+spiderScanStatus);
         }
-
         waitTillPassiveScanCompleted();
 
         System.out.println("starting active scan--");
         performActiveScan(site_to_test, contextName);
+    }
+
+    public static void performSpideringAsUser(String site_to_test, String contextName, String user) throws ClientApiException {
+        String contextId=getContextAfterImporting(contextName)+"";
+        String userId=getUserIdFromContext(contextId,user);
+
+        apiResponse=clientApi.spider.scanAsUser(contextId,userId,site_to_test,null,"true",null);
+        String spiderScanId=((ApiResponseElement)apiResponse).getValue();
+
+        apiResponse=clientApi.spider.status(spiderScanId);
+        String spiderScanStatus=((ApiResponseElement)apiResponse).getValue();
+
+        while (!spiderScanStatus.equals("100")){
+            apiResponse=clientApi.spider.status(spiderScanId);
+            spiderScanStatus=((ApiResponseElement)apiResponse).getValue();
+            System.out.println("Spidering is in progress, current status="+spiderScanStatus);
+        }
+        waitTillPassiveScanCompleted();
+    }
+
+    private static String getUserIdFromContext(String contextId, String user) throws ClientApiException {
+        String userId="";
+        apiResponse=clientApi.users.usersList(contextId);
+        List<ApiResponse> apiResponses=((ApiResponseList)apiResponse).getItems();
+
+        for(int i=0;i<apiResponses.size();i++) {
+            Map<String, ApiResponse> map = ((ApiResponseSet) apiResponses.get(i)).getValuesMap();
+            if (map.get("name").toString().equals(user)) {
+                userId=map.get("id").toString();
+                break;
+            }
+        }
+        return userId;
     }
 
     public static void performActiveScan(String site_to_test, String contextName) throws ClientApiException {
