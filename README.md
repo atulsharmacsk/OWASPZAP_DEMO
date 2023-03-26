@@ -282,3 +282,21 @@ Install- docker-https://docs.docker.com/desktop/install/windows-install/
 
 Application for form based login- 
 docker run --rm -p 8090:8080 -i -t psiinon/bodgeit
+
+
+----------------------------Demo 7---------------------------------------
+
+Json based authentication-
+
+Site setup->docker run -d -p 3000:3000 bkimminich/juice-shop
+Site to visit- http://localhost:3000/
+
+
+Steps:-
+Context creation
+- Create & save Session script (to set up bearer token and cookie for further requests)
+- Set up Authentication-> Json based authentication
+- Set up Session managment- >Script based session managment
+- Configure Users
+Export context
+Use it in automation just like we did it for form based authentication

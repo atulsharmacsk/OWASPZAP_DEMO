@@ -15,8 +15,8 @@ import static Util.ZapUtil.*;
 public class ZapTest {
 
     WebDriver driver;
-    private final String urlToTest="http://localhost:8090/bodgeit/";
-    private final String contextName="Form_Based_Auth";
+    private final String urlToTest="http://localhost:3000/";
+    private final String contextName="JsonBasedAuth";
     private final String user="Test1";
     //private final String urlToTest="https://ginandjuice.shop/";
 
@@ -48,7 +48,7 @@ public class ZapTest {
 //    }
 
     @Test
-    public void testSpiderAsFormBasedUser() throws ClientApiException {
+    public void testSpiderAsUser() throws ClientApiException {
         performSpideringAsUser(urlToTest,contextName,user);
     }
 
@@ -56,7 +56,8 @@ public class ZapTest {
     public void tearDown(Method method) throws ClientApiException {
         generateZapReport(urlToTest,method.getName().replace("test",""));
         cleanTheScanTree();
-        driver.quit();
+        removeAllAlerts();
+//        driver.quit();
     }
 
 }

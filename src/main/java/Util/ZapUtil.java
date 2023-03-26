@@ -183,4 +183,12 @@ public class ZapUtil {
             throw new RuntimeException("scan tree was not cleared");
 
     }
+
+    public static void removeAllAlerts() throws ClientApiException {
+        apiResponse=clientApi.alert.deleteAllAlerts();
+        if(((ApiResponseElement)apiResponse).getValue().equals("OK"))
+            System.out.println("Alerts have been removed");
+        else
+            throw new RuntimeException("Alerts were not removed successfully");
+    }
 }
