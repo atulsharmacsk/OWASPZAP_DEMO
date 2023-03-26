@@ -58,14 +58,12 @@ Demo Steps:
 		getClientAPI().reports.generate(title,template,theme,description,contexts,sites,sections,
                     includedconfidences,includedrisks,reportfilename,reportfilenamepattern,reportdir,display);
 		
-		
 scan url-http://127.0.0.1:8080/
 Or go through https://owasp.org/www-project-vulnerable-web-applications-directory/, please read the usage policies before using it for passive scan. Active scan though these sites might allow(please see in the policy) but on a safer side I will recommend to perfom on loclahost only.		
 		
 
 ZAP API Reference with end points-https://www.zaproxy.org/docs/api/
 ZAP API on local-http://127.0.0.1:8080/UI		
-		
 		
 Glimpse of upcoming topics that we will cover through automation-
 - Overview of the reporting capabilities. 
@@ -75,10 +73,6 @@ Glimpse of upcoming topics that we will cover through automation-
 - Setting up postman for zap client end points.
 - Using Restassured as another approach for interacting with zapClient api.
 		
-		
-
-
-
 -------------------------------DEMO 2-------------------------------------
 
 Agenda- 
@@ -152,14 +146,11 @@ Active Scan- we use policies.
 
 Confidence:-"confidence" of or in the finding. In other word how sure ZAP is in the finding/alert.
 
-
-
 -------------------------------DEMO 3-------------------------------------
 
 Agenda-
 1. Setting up Postman with the zap end points. 
 2. Executing Active Scan using zapClientAPI.
-
 
 Steps:-
 1. Created postman collection for the end points from https://www.zaproxy.org/docs/api/.
@@ -193,8 +184,7 @@ Active scan parameters-
 WaitillActiveScan-
         apiResponse = clientApi.ascan.status(scanId);
         String scanProgress = ((ApiResponseElement) apiResponse).getValue();
-		
-		
+			
 Things to come-
 - Creating contexts.
 - Active scan parameters.
@@ -214,16 +204,12 @@ Agenda-
 	- generation separate reports
 	- clean scan tree after each run.
 	
-
-
 Runs the active scanner against the given URL and/or Context
 the 'recurse' parameter can be used to scan URLs under the given URL
 the parameter 'inScopeOnly' can be used to constrain the scan to URLs that are in scope (ignored if a Context is specified)
 the parameter 'scanPolicyName' allows to specify the scan policy (if none is given it uses the default scan policy)
 the parameter 'contextId' allows to specify the context against which scan should be triggered.
 the parameters 'method' and 'postData' allow to select a given request in conjunction with the given URL.
-
-
 
 Things yet to cover
 - Spidering for active scan
@@ -251,15 +237,12 @@ Agenda-
 2. Performing a form based authentication and doing an authenticated scan
 3. Understanding how to extract any response value from complex apiresponse of zapClient
 
-
-
-Target application might have some sections of application which is only available for logged in users, therefore it is very important to know how to perform authenticated scans in zap.
+	Target application might have some sections of application which is only available for logged in users, therefore it is very important to know how to perform authenticated scans in zap.
 
 Types of authentications:-
  > Form-based authentication
  > Script-based authentication
  > JSON-based authentication
-
 
 general steps when configuring the application authentication with ZAP.
 Define a context which
@@ -271,26 +254,16 @@ Define a context which
 > Add valid user and passowrd for login
 > Make sure that session management is set as "Cookie based session management"
 
-
-
 Running a spider using above context, user, site
-
-
-
 Install- docker-https://docs.docker.com/desktop/install/windows-install/
-
-
 Application for form based login- 
 docker run --rm -p 8090:8080 -i -t psiinon/bodgeit
 
 
 ----------------------------Demo 7---------------------------------------
-
 Json based authentication-
-
 Site setup->docker run -d -p 3000:3000 bkimminich/juice-shop
 Site to visit- http://localhost:3000/
-
 
 Steps:-
 Context creation
@@ -298,5 +271,6 @@ Context creation
 - Set up Authentication-> Json based authentication
 - Set up Session managment- >Script based session managment
 - Configure Users
-Export context
-Use it in automation just like we did it for form based authentication
+
+
+Export context & Use it in automation just like we did it for form based authentication
