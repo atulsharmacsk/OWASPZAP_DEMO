@@ -264,6 +264,7 @@ docker run --rm -p 8090:8080 -i -t psiinon/bodgeit
 Json based authentication-
 Site setup->docker run -d -p 3000:3000 bkimminich/juice-shop
 Site to visit- http://localhost:3000/
+
 Steps:-
 Context creation
 - Create & save Session script (to set up bearer token and cookie for further requests)
@@ -271,5 +272,5 @@ Context creation
 - Set up Session managment- >Script based session managment
 - Configure Users
 
-Export context
-Use it in automation just like we did it for form based authentication
+
+Export context & Use it in automation just like we did it for form based authentication
