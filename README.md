@@ -274,3 +274,37 @@ Context creation
 
 
 Export context & Use it in automation just like we did it for form based authentication
+
+---------------------------Demo 8----------------------------------------
+For OAuth2, To get the Access Token a POST request as querystring
+(E.g. clientId=id, clientSecret=secret, tenantId=tenant, grant_type=client_credentials,
+email_id=email,password=pwd) to one exposed API which shall generate the token:-  http://BaseURL/TokenEndPoint
+The response JSON looks similar to
+{
+"access_token": "token value",
+"token_type": "bearer",
+"expires_in": time,
+".issued": "date time",
+".expires": "expiry date time"
+}
+
+Autentication Script based upon -https://github.com/zaproxy/community-scripts/blob/main/authentication/OfflineTokenRefresh.js (Need to modify it as per requirement)
+HTTP sender Script-https://github.com/zaproxy/community-scripts/blob/main/httpsender/AddBearerTokenHeader.js
+
+authentication script will automatically fetch the new access token for every unauthorized request determined by the "Logged Out" or "Logged In" indicator set in Context -> Authentication.
+
+httpsender script will add the new access token to all requests in scope made by ZAP (except the authentication ones) as an "Authorization: Bearer [access_token]" HTTP Header.
+
+
+Steps:-
+1) Create an Autentication Script to get the token and store it in global variable.
+2) Write an "HTTP sender" Script (and enable it by rigth click)
+3) Create a Context with following consitions:-
+   Include Urls in Context
+   Authentication : set as Script-based Authentication & load your Script (step 1 ), provide the required params, set login and logut indicator.
+   Users : create a User & define credentials.
+   Session Management : Http Authentication
+4) Export context for automation purpose.
+5) Enable the HTTP Sender script- http://127.0.0.1:8081/JSON/script/action/enable/
+6) Automated scan using the context.
+

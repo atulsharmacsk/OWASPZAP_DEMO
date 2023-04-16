@@ -16,8 +16,9 @@ public class ZapTest {
 
     WebDriver driver;
     private final String urlToTest="http://localhost:3000/";
-    private final String contextName="JsonBasedAuth";
+    private final String contextName="OAuth2_Context";
     private final String user="Test1";
+    private final String HttpSenderFileName="HttpSender.js";
     //private final String urlToTest="https://ginandjuice.shop/";
 
     @BeforeMethod
@@ -47,10 +48,18 @@ public class ZapTest {
 //        performSpidering(urlToTest,contextName);
 //    }
 
+//    @Test
+//    public void testSpiderAsUser() throws ClientApiException {
+//        performSpideringAsUser(urlToTest,contextName,user);
+//    }
+
     @Test
-    public void testSpiderAsUser() throws ClientApiException {
+    public void testSpiderAsUserOAuth() throws ClientApiException {
+        enableScript(HttpSenderFileName);
         performSpideringAsUser(urlToTest,contextName,user);
     }
+
+
 
     @AfterMethod
     public void tearDown(Method method) throws ClientApiException {

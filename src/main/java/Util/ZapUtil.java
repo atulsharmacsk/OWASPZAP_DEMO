@@ -70,6 +70,14 @@ public class ZapUtil {
         performActiveScan(site_to_test, contextName);
     }
 
+    public static void enableScript(String name) throws ClientApiException {
+        apiResponse=clientApi.script.enable(name);
+        if(((ApiResponseElement)apiResponse).getValue().equals("OK"))
+            System.out.println("Script has been enabled");
+        else
+            throw new RuntimeException("script is not enabled");
+    }
+
     public static void performSpideringAsUser(String site_to_test, String contextName, String user) throws ClientApiException {
         String contextId=getContextAfterImporting(contextName)+"";
         String userId=getUserIdFromContext(contextId,user);
