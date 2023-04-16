@@ -40,8 +40,8 @@ Demo Steps:
 			- Open url on which scan needs to be performed, wait for passive scan to completed
 			- Generate scan report and close browser window. 
 			
-		(https://www.zaproxy.org/docs/desktop/addons/report-generation/#template)
-		String title="Demo Title";
+	(https://www.zaproxy.org/docs/desktop/addons/report-generation/#template)
+	String title="Demo Title";
         String template="traditional-html";
         String theme = null;
         String description="Demo description";
@@ -260,8 +260,10 @@ Application for form based login-
 docker run --rm -p 8090:8080 -i -t psiinon/bodgeit
 
 
-----------------------------Demo 7---------------------------------------
+----------------------------Demo 7--------------------------------------
+
 Json based authentication-
+
 Site setup->docker run -d -p 3000:3000 bkimminich/juice-shop
 Site to visit- http://localhost:3000/
 
@@ -275,7 +277,10 @@ Context creation
 
 Export context & Use it in automation just like we did it for form based authentication
 
----------------------------Demo 8----------------------------------------
+---------------------------Demo 8---------------------------------------
+
+Script Based AUthentication/ OAuth2 Authorization-
+
 For OAuth2, To get the Access Token a POST request as querystring
 (E.g. clientId=id, clientSecret=secret, tenantId=tenant, grant_type=client_credentials,
 email_id=email,password=pwd) to one exposed API which shall generate the token:-  http://BaseURL/TokenEndPoint
